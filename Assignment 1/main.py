@@ -29,15 +29,10 @@ def get_unknown_point(list_of_points):
 	return unknown_points[0]
 
 def generate_plot(list_of_points):
-	unknown_point = get_unknown_point(list_of_points)
 	for point in list_of_points:
 		colour, marker, size = 'k', 'o', 10
 		if point.is_control:
-			colour, marker, size = 'b', '^', 100
-			plt.plot([unknown_point.x, point.x], [unknown_point.y, point.y], color='k', linestyle='-', linewidth=2)
-		if point.is_unknown:
-			plt.annotate(point.name, xy=(point.x, point.y), textcoords='offset points')
-			colour, marker, size = 'k', 'p', 100
+			colour, marker, size = 'k', '^', 100
 		plt.scatter(point.x, point.y, s=size, c=colour, alpha=0.5, marker=marker)
 	plt.show()
 
@@ -47,6 +42,5 @@ list_of_points = generate_grid_of_points(m=10,n=10)
 list_of_points[24].is_control = True
 list_of_points[24].name = 'A'
 list_of_points[59].is_control = True
-list_of_points[74].is_unknown = True
-list_of_points[74].name = 'P'
+list_of_points[59].name = 'B'
 generate_plot(list_of_points)
