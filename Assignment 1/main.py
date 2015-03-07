@@ -1,16 +1,25 @@
-
+import math
+import sympy
 from mpl_toolkits.mplot3d import Axes3D
 import matplotlib.pyplot as plt
 from points import Point
 
+MODE = 'INTERSECTION'
 
-def get_x_y_lists(list_of_points):
-	x = []
-	y = []
-	for point in list_of_points:
-		x.append(point.x)
-		y.append(point.y)
-	return x, y
+
+def join(from_, to):
+	distance = math.sqrt(((to.x - from_.x)**2) + ((to.y - from_.y)**2))
+	delta_y = to.y - from_.y
+	delta_x = to.x - from_.x
+	if delta_y == 0 and delta_x > 0:
+		direction = math.radians(90)
+	elif delta_y == 0 and delta_x < 0:
+		direction = math.radians(270)
+	else:
+		direction = math.atan((to.x - from_.x) / (to.y - from_.y))
+	if to.y < from_.y:
+		direction += math.pi
+	return distance, direction
 
 def generate_grid_of_points(m=10,n=10):
 	list_of_points = []
@@ -38,9 +47,24 @@ def generate_plot(list_of_points):
 
 list_of_points = generate_grid_of_points(m=10,n=10)
 
+Ax = sympy.Symbol('Ax')
+Ay = sympy.Symbol('Ay')
+By = sympy.Symbol('By')
+Bx = sympy.Symbol('Bx')
+an = sympy.Symbol('an')
+bn = sympy.Symbol('bn')
+Nx = (Ax + ((By - Ay) - (Bx - Ax) * sympy.tan(bn))/(sympy.tan(an) - sympy.tan(bn)))
+Ny = Ay + (Nx - Ax) * sympy.tan(an)
+print Ny.diff(bn)
+Ny
 
-list_of_points[24].is_control = True
-list_of_points[24].name = 'A'
-list_of_points[59].is_control = True
-list_of_points[59].name = 'B'
-generate_plot(list_of_points)
+
+A = list_of_points[0]
+A.is_control = True
+A.name = 'A'
+B = list_of_points[1]
+B.is_control = True
+B.name = 'B'
+
+print(join(A, B)[0], math.degrees(join(A, B)[1]))
+#generate_plot(list_of_points)
