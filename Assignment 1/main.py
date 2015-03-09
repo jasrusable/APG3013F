@@ -61,11 +61,11 @@ class Intersection(object):
         Nx = (Ax + ((By - Ay) - (Bx - Ax) * sympy.tan(bn)) / (sympy.tan(an) - sympy.tan(bn)))
         Ny = Ay + (Nx - Ax) * sympy.tan(an)
 
-        cov_X = sympy.Matrix([[0.1,0],
-                            [0,0.1]])
+        cov_X = sympy.Matrix([[0.01,0],
+                            [0,0.01]])
         B = sympy.Matrix([[Nx.diff(an), Nx.diff(bn)],
                             [Ny.diff(an), Nx.diff(bn)]])
-
+        print (B)
         cov_Y = B * cov_X * B.T
 
         temp_an = Join(control_point_a, unknown_point).direction
@@ -102,7 +102,14 @@ def generate_plot(grid_of_points):
             point = grid_of_points[i][j]
             error = 100
             if point.x_error and point.y_error:
-                print point.x_error
+                if math.isnan(point.x_error) or math.isnan(point.y_error):
+                    error = 10.00
+                else:
+                    error = round(math.sqrt(point.x_error**2 + point.y_error**2), 1)
+                    if error > 1000:
+                        error = 100
+                        
+            print(error)
             z[i][j] = error
 
 
@@ -111,7 +118,7 @@ def generate_plot(grid_of_points):
 
     z_min, z_max = -numpy.abs(z).max(), numpy.abs(z).max()
 
-    plt.pcolormesh(x, y, z, cmap='RdBu', vmin=z_min, vmax=z_max)
+    plt.pcolormesh(x, y, z, cmap='RdBu')
     plt.title('pcolormesh')
     # set the limits of the plot to the limits of the data
     plt.axis([x.min(), x.max(), y.min(), y.max()])
@@ -138,12 +145,12 @@ def populate_error_values(grid_of_points, control_point_a, control_point_b):
                 point.x_error = intersection.variance_x
                 point.y_error = intersection.variance_y
 
-grid_of_points = generate_grid_of_points(m=10,n=10)
+grid_of_points = generate_grid_of_points(m=20,n=20)
 
-A = grid_of_points[1][1]
+A = grid_of_points[4][1]
 A.is_control = True
 A.name = 'A'
-B = grid_of_points[1][7]
+B = grid_of_points[4][8]
 B.is_control = True
 B.name = 'B'
 P = grid_of_points[2][2]
