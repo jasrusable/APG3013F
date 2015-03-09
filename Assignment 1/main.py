@@ -65,7 +65,7 @@ class Intersection(object):
                             [0,0.01]])
         B = sympy.Matrix([[Nx.diff(an), Nx.diff(bn)],
                             [Ny.diff(an), Nx.diff(bn)]])
-        print (B)
+        
         cov_Y = B * cov_X * B.T
 
         temp_an = Join(control_point_a, unknown_point).direction
@@ -147,10 +147,10 @@ def populate_error_values(grid_of_points, control_point_a, control_point_b):
 
 grid_of_points = generate_grid_of_points(m=20,n=20)
 
-A = grid_of_points[4][1]
+A = grid_of_points[4][8]
 A.is_control = True
 A.name = 'A'
-B = grid_of_points[4][8]
+B = grid_of_points[4][12]
 B.is_control = True
 B.name = 'B'
 P = grid_of_points[2][2]
