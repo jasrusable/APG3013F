@@ -1,17 +1,42 @@
 import math
 import sympy
 import numpy
+import datetime
+import logging
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 from points import Point
 
-MODE = 'INTERSECTION'
+
+logger = logging.getLogger(__name__) 
+#TODO: use wraps from functools
+def log_timing_decorator(task_name, logger):
+    def wrap_f(f):
+        def wrapped_f(*args, **kwargs):
+            now = datetime.datetime.now()
+            res = f(*args, **kwargs)	
+            dt = datetime.datetime.now() - now
+            logger.info("%s - %s" % (task_name, dt))
+            return res
+        return wrapped_f
+    return wrap_f
+    
+class log_timing(object):
+    def __init__(self, task_name, logger):
+        self.task_name = task_name
+        self.logger = logger
+
+    def __enter__(self):
+        self.now = datetime.datetime.now()
+
+    def __exit__(self, type, value, traceback):
+        dt = datetime.datetime.now() - self.now
+        self.logger.error("%s - %s" % (self.task_name, dt))
 
 class Join(object):
     def __init__ (self, from_point=None, to_point=None):
         self.from_point = from_point
         self.to_point = to_point
-        
         distance = math.sqrt(((to_point.x - from_point.x)**2) + ((to_point.y - from_point.y)**2))
         delta_y = to_point.y - from_point.y
         delta_x = to_point.x - from_point.x
@@ -46,10 +71,10 @@ class Intersection(object):
         Nx = (Ax + ((By - Ay) - (Bx - Ax) * sympy.tan(bn)) / (sympy.tan(an) - sympy.tan(bn)))
         Ny = Ay + (Nx - Ax) * sympy.tan(an)
 
-        cov_X = sympy.Matrix([[0.01,0],
-                            [0,0.01]])
+        cov_X = sympy.Matrix([[0.001,0],
+                            [0,0.001]])
         B = sympy.Matrix([[Nx.diff(an), Nx.diff(bn)],
-                          [Ny.diff(an), Nx.diff(bn)]])
+                          [Ny.diff(an), Ny.diff(bn)]])
         
         cov_Y = B * cov_X * B.T
 
