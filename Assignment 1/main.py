@@ -8,11 +8,6 @@ from points import Point
 MODE = 'INTERSECTION'
 
 class Join(object):
-    from_point = None
-    to_point = None
-    distance = None
-    direction = None
-
     def __init__ (self, from_point=None, to_point=None):
         self.from_point = from_point
         self.to_point = to_point
@@ -34,16 +29,6 @@ class Join(object):
 
 
 class Intersection(object):
-    control_point_a = None
-    control_point_b = None
-    unknown_point = None
-    precesion_estimate_a = None
-    precesion_estimate_b = None
-    variance_x = None
-    variance_y = None
-    variance_xy = None
-
-
     def __init__ (self, control_point_a=None, control_point_b=None, unknown_point=None, 
         precesion_estimate_a=0.1, precesion_estimate_b=0.1):
         self.control_point_a = control_point_a
@@ -64,7 +49,7 @@ class Intersection(object):
         cov_X = sympy.Matrix([[0.01,0],
                             [0,0.01]])
         B = sympy.Matrix([[Nx.diff(an), Nx.diff(bn)],
-                            [Ny.diff(an), Nx.diff(bn)]])
+                          [Ny.diff(an), Nx.diff(bn)]])
         
         cov_Y = B * cov_X * B.T
 
@@ -72,7 +57,6 @@ class Intersection(object):
         temp_bn = Join(control_point_b, unknown_point).direction
 
         cov_Y =  cov_Y.subs(an, temp_an).subs(bn, temp_bn)
-
 
         self.variance_xy = cov_Y[1]
         self.variance_x = cov_Y[0] 
@@ -92,8 +76,7 @@ def generate_plot(grid_of_points):
 
     l = (len(grid_of_points))
     dd = 1
-    y, x = numpy.mgrid[slice(0, l, dd),
-                    slice(0, l, dd)]
+    y, x = numpy.mgrid[slice(0, l, dd), slice(0, l, dd)]
 
     z = numpy.mgrid[0:l,0:l][0]
     
@@ -106,15 +89,11 @@ def generate_plot(grid_of_points):
                     error = 10.00
                 else:
                     error = round(math.sqrt(point.x_error**2 + point.y_error**2), 1)
-                    if error > 1000:
-                        error = 100
+                    if error > 100:
+                        error = 10
                         
-            print(error)
+            #print(error)
             z[i][j] = error
-
-
-
-    
 
     z_min, z_max = -numpy.abs(z).max(), numpy.abs(z).max()
 
@@ -147,10 +126,10 @@ def populate_error_values(grid_of_points, control_point_a, control_point_b):
 
 grid_of_points = generate_grid_of_points(m=20,n=20)
 
-A = grid_of_points[4][8]
+A = grid_of_points[9][9]
 A.is_control = True
 A.name = 'A'
-B = grid_of_points[4][12]
+B = grid_of_points[9][11]
 B.is_control = True
 B.name = 'B'
 P = grid_of_points[2][2]
