@@ -49,13 +49,25 @@ for observation in observations:
         to_point = get_point_by_name(observation.to_point_name, points)
         i = 0
         for unknown_point in get_provisional_points(points):
+            d = get_distance(to_point, from_point)
+            y = 206264.8 * (to_point.x - from_point.x) / d**2
+            x = -206264.8 * (to_point.y - from_point.y) / d**2
             if to_point == unknown_point:
-                A_row[i] = 1
-                A_row[i+1] = 1
-            if from_point == unknown_point:
-                A_row[i] = 1
-                A_row[i+1] = 1
+                A_row[i] = y
+                A_row[i+1] = x
+            elif from_point == unknown_point:
+                A_row[i] = y
+                A_row[i+1] = x
+            else:
+                pass
             i += 2
+
+        j = 0
+        for set_up_point_name in get_set_up_points_names(observations):
+            set_up_point = get_point_by_name(set_up_point_name, points)
+            if set_up_point == from_point:
+                A_row[6+j] = -1
+            j+=1
         A = numpy.vstack([A, A_row])
 
 print(A)
