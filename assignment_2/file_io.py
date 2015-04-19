@@ -47,23 +47,24 @@ def get_list_of_observations_from_file(path='observations.csv', delim=','):
     f = open(path, 'r')
     list_of_observations = []
     for line in f.readlines():
-        line = line.strip('\n')
+        line = line.strip('\n').strip(' ')
         parts = line.split(delim)
         type_ = parts[0]
         from_point_name = parts[1]
         to_point_name = parts[2]
-        direction = parts[3]
-        distance = parts[4]
-        if direction:
-            radians = utils.to_radians(current_format_="dms", delim='.', value=direction)
+        value = parts[3]
+        if type_ == 'direction':
+            radians = utils.to_radians(current_format_="dms", delim='.', value=value)
             dir_obs = DirectionObservation(from_point_name=from_point_name,
                 to_point_name=to_point_name,
                 radians=radians)
             list_of_observations.append(dir_obs)
-        if distance:
-            meters = distance
+        elif type_ == 'distance':
+            meters = value
             dist_obs = DistanceObservation(from_point_name=from_point_name,
                 to_point_name=to_point_name,
                 meters=meters)
             list_of_observations.append(dist_obs)
+        else:
+            raise Exception('Unknown tpye_')
     return list_of_observations

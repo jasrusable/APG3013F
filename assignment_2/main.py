@@ -2,5 +2,6 @@ from file_io import get_list_of_points_from_file, get_list_of_observations_from_
 
 
 points = get_list_of_points_from_file(path='data/points.csv')
+observations = get_list_of_observations_from_file(path='data/observations.csv')
 
 print(points)
