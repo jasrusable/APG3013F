@@ -29,10 +29,10 @@ def get_list_of_points_from_file(path='points.csv', delim=','):
     f = open(path, 'r')
     list_of_points = []
     for line in f.readlines():
-        line = line.strip('\n')
+        line = line.strip('\n').strip(' ')
         parts = line.split(delim)
         type_ = parts[0].strip(' ')
-        name = parts[1]
+        name = parts[1].strip(' ')
         y = parts[2].strip(' ')
         x = parts[3].strip(' ')
         if type_ not in ['CP', 'P']:
@@ -49,10 +49,10 @@ def get_list_of_observations_from_file(path='observations.csv', delim=','):
     for line in f.readlines():
         line = line.strip('\n').strip(' ')
         parts = line.split(delim)
-        type_ = parts[0]
-        from_point_name = parts[1]
-        to_point_name = parts[2]
-        value = parts[3]
+        type_ = parts[0].strip(' ')
+        from_point_name = parts[1].strip(' ')
+        to_point_name = parts[2].strip(' ')
+        value = parts[3].strip(' ')
         if type_ == 'direction':
             radians = utils.to_radians(current_format_="dms", delim='.', value=value)
             dir_obs = DirectionObservation(from_point_name=from_point_name,

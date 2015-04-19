@@ -12,4 +12,4 @@ class Point(object):
         return repr(self)
 
     def __repr__(self):
-        return "(Point x:{0} y:{1} z:{2})".format(self.x, self.y, self.z)
+        return "(Point name: {0} x:{1} y:{2} z:{3})".format(self.name, self.x, self.y, self.z)
