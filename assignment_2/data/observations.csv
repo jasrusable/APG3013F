@@ -5,10 +5,7 @@ direction, SUR09, T444,            127.57.40,        127.58.08
 direction, SUR10, SUR09,        194.26.16,        194.24.42      
 direction, SUR10, T040,           316.31.21,        316.31.30      
 direction, SUR10, RU4A,         007.14.50,        007.17.05      
-direction, SUR10, T013,           121.23.48,        121.23.01  
-direction, SUR12, SUR11,        231.33.22,        231.34.49  
-direction, SUR12, T040,           290.24.23,        290.24.04  
-direction, SUR12, T115,           047.44.48,        047.44.27
+direction, SUR10, T013,           121.23.48,        121.23.01
 direction, RU4A, SUR10,         187.14.58,       187.17.05
 direction, RU4A, T040,            310.20.08,       310.19.25   
 direction, RU4A, SUR11,         014.38.56,       014.35.53   
@@ -16,6 +13,9 @@ direction, RU4A, T117,            099.33.15,       099.32.51
 direction, SUR11, RU4A,         194.38.53,        194.35.53   
 direction, SUR11, T040,           301.40.59,        301.40.37 
 direction, SUR11, SUR12,       051.33.15,        051.34.49
+direction, SUR12, SUR11,        231.33.22,        231.34.49  
+direction, SUR12, T040,           290.24.23,        290.24.04  
+direction, SUR12, T115,           047.44.48,        047.44.27
 distance, SUR09, SUR10,          229.598,            229.461           
 distance, SUR10, RU4A,           159.918,            160.092            
 distance, RU4A, SUR11,           180.520,            180.528           
