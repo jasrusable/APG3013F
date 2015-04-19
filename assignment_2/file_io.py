@@ -33,8 +33,8 @@ def get_list_of_points_from_file(path='points.csv', delim=','):
         parts = line.split(delim)
         type_ = parts[0].strip(' ')
         name = parts[1]
-        x = parts[2].strip(' ')
-        y = parts[3].strip(' ')
+        y = parts[2].strip(' ')
+        x = parts[3].strip(' ')
         if type_ not in ['CP', 'P']:
             raise Exception('Points type_ is not P nor CP')
         z = 0
