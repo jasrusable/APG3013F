@@ -102,8 +102,8 @@ def solve(observations):
                 distance = observation.meters
                 y = -(to_point.y - from_point.y) / distance
                 x = -(to_point.x - from_point.x) / distance
-                y = 1
-                x = 1
+                y = y
+                x = x
                 if to_point == unknown_point:
                     A_row[i] = y
                     A_row[i+1] = x
@@ -124,4 +124,4 @@ A, L = solve(observations)
 X = (A.T * A).I * A.T * L
 sigma_X = (A.T * A)**-1
 V = A*X - L
-print(V)
+
