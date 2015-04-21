@@ -53,9 +53,9 @@ observations = get_list_of_observations_from_file(path='data/observations.csv')
 
 set_up_point_names = get_set_up_points_names(observations)
 
+unknowns = get_provisional_points(points)
 
-
-def solve(observations):
+def solve(observations, points):
     A = numpy.matrix([
         [0,0,0,0,0,0,0,0,0,0,0],
     ])
@@ -71,7 +71,6 @@ def solve(observations):
     ])
     P = numpy.delete(P, (0), axis=0)
     p = 0
-    unknowns = get_provisional_points(points)
     for observation in observations:
         A_row = [0,0,0,0,0,0,0,0,0,0,0]
         P_row = [0] * len(observations)
@@ -98,7 +97,6 @@ def solve(observations):
             observed = observation.radians
             calculated = get_direction(from_point, to_point)
             L_row = (observed-calculated)
-            print(L_row)
             j = 0
             for set_up_point_name in get_set_up_points_names(observations):
                 set_up_point = get_point_by_name(set_up_point_name, points)
@@ -132,9 +130,14 @@ def solve(observations):
         P = numpy.vstack([P, P_row])
     return A, L, P
 
-A, L, P = solve(observations)
-X = (A.T * P * A).I * A.T * P * L
-sigma_X = (A.T * A)**-1
-V = A*X - L
+for i in range(2):
+    A, L, P = solve(observations, points)
+    X = (A.T * P * A).I * A.T * P * L
+    for unknown_point in unknowns:
+        unknown_point.y += X.item(0)
+        unknown_point.x += X.item(1)
+    sigma_X = (A.T * A)**-1
+    V = A*X - L
+    print(V.T *P * V)
 
 
