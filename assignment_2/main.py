@@ -124,4 +124,4 @@ A, L = solve(observations)
 X = (A.T * A).I * A.T * L
 sigma_X = (A.T * A)**-1
 V = A*X - L
-print(V)
+print(A)
