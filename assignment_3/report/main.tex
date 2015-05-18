@@ -20,7 +20,8 @@
 \newpage
 \section{Introduction}
 The aim of this assignment is to solve a traverse least squares adjustment by Cholesky decomposition,
-and to perform a sequential least squares adjustment.
+and to perform a sequential least squares adjustment by adding additional observations during iteration
+of a solution.
 
 \section{Background}
 \subsection{Cholesky Decomposition}
@@ -53,8 +54,13 @@ The Cholesky decomposition is used as follows when solving for a least sqaures s
 When performing a least squares solution using a program, solving for all resultant matricies, Cholesky decompostion results
 in the ability to solve for these resultant matricies much more quickly and more efficiently.
 
-\section{Discussion}
-
 \section{Conclusion}
+\subsection{Cholesky Decomposition}
+The Cholesky method of solving for the x vector in a least sqaures adjustment facilitates efficiency computation and 
+can result in quicker computations.
+
+\subsection{Sequential Least Sqaures}
+Sequential least sqaures is very useful for smoothing and filtering applications, and is rather trivial to implement ontop
+of an existing least squares program.
 
 \end{document}
