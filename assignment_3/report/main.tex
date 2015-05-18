@@ -1,0 +1,60 @@
+\documentclass{article}
+
+\usepackage{graphicx}
+\usepackage{amsmath}
+
+\title{APG3013F Assignment 3 - Numerical methods and quality control for least squares traverse adjustments}
+\date{12/05/2015}
+\author{Jason David Russell - RSSJAS005}
+
+\begin{document}
+
+\maketitle
+\pagenumbering{gobble}
+
+\newpage
+\tableofcontents
+
+\pagenumbering{arabic}
+
+\newpage
+\section{Introduction}
+The aim of this assignment is to solve a traverse least squares adjustment by Cholesky decomposition,
+and to perform a sequential least squares adjustment.
+
+\section{Background}
+\subsection{Cholesky Decomposition}
+There are many techniques which can be used in when performing matrix opertaions on a large scale to 
+reduce the cost of computation, and to speed up computaion. For example, with calculations involving sparse 
+matricies it is useful to partition matricies such that maximum multiplication of small numbers/elements/zeros
+occur. Matrix decomposition is another method of matrix opertaion optomization. Matrix decompotion essentially
+involves breaking down a matrix into a formulation of multiple matricies (more than one). Some other techniques are
+Guass Reduction, Jacobi Method, Gauss-Jordan Method etc. The Cholesky Method is very conveniant in that 
+it provides an inverse which is later used for subsequent least squares matricies. It is for this reason that
+the Cholesky method is of partiular suitability when programming a least squares solution.
+
+\subsection{Sequential least squares}
+Sequential least squares is a method least squares determination whereby additional observations
+are added to a calculation post computaion (after an iteration). This can be very useful when filtering or smoothing
+is required (Kalman filter).
+
+\section{Problem Statement}
+\subsection{Cholesky decomposition}
+Calculate a traverse solution by Cholesky decomposition when determining the x-vector of a least squares solution.
+
+\subsection{Sequential Least Squares}
+Sequentially add observations to an adjustment (Sequential least squares).
+
+\section{Method}
+The Cholesky decomposition is used as follows when solving for a least sqaures solution vector, x: 
+\[ (A^t P A)x = A^t P l \]
+
+\section{Results}
+When performing a least squares solution using a program, solving for all resultant matricies, Cholesky decompostion results
+in the ability to solve for these resultant matricies much more quickly and more efficiently.
+
+\section{Discussion}
+
+\section{Conclusion}
+
+\end{document}
